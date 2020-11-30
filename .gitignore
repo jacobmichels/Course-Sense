@@ -344,3 +344,6 @@ wwwroot/
 
 #Litedb 
 *.db
+
+#Appsettings
+appsettings*.json
