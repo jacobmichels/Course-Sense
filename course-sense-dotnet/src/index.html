@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>UofG Course Sense</title>
+    <meta name="description" content="Get notified when there's space in a course!">
+    <meta name="author" content="Jacob Michels">
+    <meta name=viewport content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top navbar-dark" style="background-color: #2c2c2c;">
+        <a class="navbar-brand" href="#">UofG Course Sense</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="#">Home</a>
+                <a class="nav-item nav-link" href="#">How it works</a>
+                <a class="nav-item nav-link" href="#">Contact me</a>
+            </div>
+        </div>
+    </nav>
+    <div class="pt-5" id="wrapper">
+        <div class="container mt-5">
+            <div class="jumbotron bg-white" id="main">
+                <h1 class="display-4">Get notified!</h1>
+                <p class="lead">Don't wanna spam refresh trying to get into that one UofG course? I got you covered. Complete the form below and get a message when a space opens up!</p>
+                <hr>
+                
+            </div>
+            <div class="container pt-2 bg-white pb-2" id="form-box">
+                <h4 class="text-center mb-3">Get a message when there's space.</h4>
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Phone</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="(123) 456-7890" id="phone-input" onblur="validatePhone(event.target.value,true);">
+                </div>
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Email</span>
+                    </div>
+                    <input type="text" class="form-control" id="email-input" placeholder="jsmith@example.com" onblur="validateEmail(event.target.value,true);">
+                </div>
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Subject and code</span>
+                    </div>
+                    <input type="text" id="subject-input" aria-label="Course Subject" placeholder="ACCT" onblur="validateSubject(event.target.value,true);" class="form-control">
+                    <input type="text" id="code-input" aria-label="Course Code" placeholder="1220" class="form-control" onblur="validateCode(event.target.value,true);">
+                </div>
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Section and term</span>
+                    </div>
+                    <input type="text" id="section-input" aria-label="Course Section" placeholder="0106" class="form-control" onblur="validateSection(event.target.value,true);">
+                    <input type="text" id="term-input" aria-label="Course Term" placeholder="F20" class="form-control" onblur="validateTerm(event.target.value,true);">
+                </div>
+                <div class="container text-center">
+                    <p>I will never share your phone number or email address with anyone.</p>
+                    <button type="button" id="submit-btn" class="btn btn-dark" onclick="modalPrompt();">Continue</button>
+                </div>
+                <div class="modal fade" id="submit-modal" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Submit Request</h5>
+                            <button id="main-modal-close" type="button" class="close text-danger" onclick="closeModal();">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div id="modal-body" class="modal-body">
+                            You are about to send a request to be notified of an opening in the course <strong>{0}</strong>. You will be notified through your <strong>{1}</strong>. Does this look good?
+                            <span id="modal-status">
+                            </span>
+                        </div>
+                        <div class="modal-footer">
+                            
+                            <p class="spinner" hidden>Processing request...</p>
+                            <div class="spinner spinner-border text-primary" hidden role="status">
+                                <span class="sr-only">Loading...</span>
+                              </div>
+                            <button id="modal-submit-btn" type="button" class="btn btn-primary" onclick="submitNotificationRequest();">Send it!</button>
+                            <button type="button" class="modal-close-btn btn btn-secondary" data-dismiss="modal">No! Go back!</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                
+            </div>
+        </div>
+
+        <div id="footer" class="pt-5 text-center">
+            <a href="https://github.com/jacobmichels/course-sense" style="color: inherit;">
+                <i class="fab fa-github-square fa-5x"></i>
+            </a>
+            
+        </div>
+    </div>
+
+</body>
+
+</html>

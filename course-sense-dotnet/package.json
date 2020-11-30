@@ -1,0 +1,40 @@
+{
+  "name": "course-sense",
+  "version": "3.0.0",
+  "description": "Get notified when there's space in a course!",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "release": "webpack --config webpack.prod.js --progress  --display-modules --mode=production",
+    "dev": "webpack-dev-server --open --config webpack.dev.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jacobmichels/course-sense.git"
+  },
+  "author": "Jacob",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jacobmichels/course-sense/issues"
+  },
+  "homepage": "https://github.com/jacobmichels/course-sense#readme",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.13.1",
+    "bootstrap": "^4.5.0",
+    "jquery": "^3.5.1",
+    "jquery-mask-plugin": "^1.14.16",
+    "popper.js": "^1.16.1"
+  },
+  "devDependencies": {
+    "brotli-webpack-plugin": "^1.1.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^3.6.0",
+    "file-loader": "^6.0.0",
+    "html-webpack-plugin": "^4.3.0",
+    "style-loader": "^1.2.1",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0",
+    "webpack-merge": "^5.0.9"
+  }
+}

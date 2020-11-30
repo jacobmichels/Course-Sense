@@ -1,0 +1,25 @@
+body{
+    background-image: url('images/triangles.png');
+}
+
+#main{
+    box-shadow: 5px 10px;
+}
+
+#submit-btn{
+    min-width: 30%;
+}
+
+#form-box{
+    box-shadow: 5px 10px;
+    border-radius: 5px;
+}
+
+/*taken from https://stackoverflow.com/questions/22196587/how-to-vertically-center-a-container-in-bootstrap*/
+.vertical-center {
+    min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+    min-height: 100vh; /* These two lines are counted as one :-)       */
+  
+    display: flex;
+    align-items: center;
+  }
