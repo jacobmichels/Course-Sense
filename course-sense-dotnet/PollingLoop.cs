@@ -46,25 +46,28 @@ namespace course_sense_dotnet
             logger.LogInformation("Main loop background service starting.");
             while (!stoppingToken.IsCancellationRequested)
             {
-                foreach (NotificationRequest request in requestCollection)
+                if (requestCollection.Count>0)
                 {
-                    tasks.Add(Task.Run(() => serviceProvider.GetRequiredService<INotificationManager>().CheckCapacityAndAlert(request, requestCollection)));
+                    foreach (NotificationRequest request in requestCollection)
+                    {
+                        tasks.Add(Task.Run(() => serviceProvider.GetRequiredService<INotificationManager>().CheckCapacityAndAlert(request, requestCollection)));
+                    }
+                    Task requestTasks = Task.WhenAll(tasks);
+                    try
+                    {
+                        await requestTasks;
+                    }
+                    catch (Exception e)
+                    {
+                        logger.LogError($"Error occured while awaiting {nameof(requestTasks)}: {e.Message}");
+                    }
+                    if (requestTasks.Status == TaskStatus.Faulted)
+                    {
+                        logger.LogError($"{nameof(requestTasks)} has completed due to an unhandled exception.");
+                    }
+                    tasks.Clear();
                 }
-                Task requestTasks =  Task.WhenAll(tasks);
-                try
-                {
-                    await requestTasks;
-                }
-                catch(Exception e)
-                {
-                    logger.LogError($"Error occured while awaiting {nameof(requestTasks)}: {e.Message}");
-                }
-                if(requestTasks.Status == TaskStatus.Faulted)
-                {
-                    logger.LogError($"{nameof(requestTasks)} has completed due to an unhandled exception.");
-                }
-                tasks.Clear();
-                await Task.Delay(5000);
+                await Task.Delay(10000);
             }
         }
         private void LoadNotificationRequests()
