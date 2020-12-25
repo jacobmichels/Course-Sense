@@ -237,21 +237,24 @@ window.submitNotificationRequest = function(){
         if(this.readyState===4&&this.status===200){
             console.log("notification good");
             requestState=false;
-            $('#modal-status').html('<br><br>Success! You will get a notification when a spot opens.');
+            $('#modal-status').html('<br><br>Success! You will get a notification when a spot opens :)');
             $('#modal-submit-btn').removeAttr("disabled","disabled");
             $('.modal-close-btn').removeAttr("disabled","disabled");
             $('.spinner').attr("hidden","hidden");
             
         }
         else if(this.readyState===4&&this.status!==200){
-            if(this.responseText==='course not valid'){
+            if(this.responseText==='Bad course'){
                 $('#modal-status').html('<br><br>The course that you entered does not exist. Please try again.');
+                console.log("Bad course");
             }
-            else if(this.responseText==='python failed, retry'){
-                $('#modal-status').html('<br><br>Internal server error, please try again. If this keeps happening, please send me an email letting me know :)');
+            else if(this.responseText==='Bad contact'){
+                $('#modal-status').html('<br><br>Some of the contact info you entered did not pass server validation. Please go back and fix any errors.');
+                console.log("Bad contact");
             }
-            else if(this.responseText==='failed validation'){
-                $('#modal-status').html('<br><br>Some of the input you entered did not pass server validation. Please go back and fix any errors.');
+            else {
+                $('#modal-status').html("<br><br>Internal server error, please try again. If this keeps happening, please send me an email and I'll look into it");
+                console.log("Internal server error");
             }
             requestState=false;
             $('#modal-submit-btn').removeAttr("disabled","disabled");
