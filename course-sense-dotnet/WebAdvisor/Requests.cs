@@ -23,27 +23,35 @@ namespace course_sense_dotnet.WebAdvisor
         }
         public async Task<CourseCapacity> GetCapacity(Course course)
         {
-            HttpRequestMessage request = requestsHelper.CreateHttpRequestMessage(HttpMethod.Get,Constants.WebAdvisorInitialConnectionUrl);
-            HttpResponseMessage response = await httpClient.SendAsync(request);
-            string token = requestsHelper.GetTokenFromResponse(response);
+            try
+            {
+                HttpRequestMessage request = requestsHelper.CreateHttpRequestMessage(HttpMethod.Get, Constants.WebAdvisorInitialConnectionUrl);
+                HttpResponseMessage response = await httpClient.SendAsync(request);
+                string token = requestsHelper.GetTokenFromResponse(response);
 
-            request = requestsHelper.CreateHttpRequestMessage(HttpMethod.Get, Constants.WebAdvisorInitialConnectionUrl + token);
-            response = await httpClient.SendAsync(request);
-            token = requestsHelper.GetTokenFromResponse(response);
+                request = requestsHelper.CreateHttpRequestMessage(HttpMethod.Get, Constants.WebAdvisorInitialConnectionUrl + token);
+                response = await httpClient.SendAsync(request);
+                token = requestsHelper.GetTokenFromResponse(response);
 
-            string postUrl = requestsHelper.CreatePostUrl(token);
-            request = requestsHelper.CreateHttpRequestMessage(HttpMethod.Post, postUrl);
-            request.Content = requestsHelper.CreateFormData(course);
-            response = await httpClient.SendAsync(request);
+                string postUrl = requestsHelper.CreatePostUrl(token);
+                request = requestsHelper.CreateHttpRequestMessage(HttpMethod.Post, postUrl);
+                request.Content = requestsHelper.CreateFormData(course);
+                response = await httpClient.SendAsync(request);
 
-            string responseHtml = await response.Content.ReadAsStringAsync();
-            HtmlDocument htmlDoc = new HtmlDocument();
-            htmlDoc.LoadHtml(responseHtml);
+                string responseHtml = await response.Content.ReadAsStringAsync();
+                HtmlDocument htmlDoc = new HtmlDocument();
+                htmlDoc.LoadHtml(responseHtml);
 
-            HtmlNode capacityNode = htmlDoc.GetElementbyId(Constants.CapacityNodeID);
-            CourseCapacity capacity = requestsHelper.GetCourseCapacity(capacityNode);
+                HtmlNode capacityNode = htmlDoc.GetElementbyId(Constants.CapacityNodeID);
+                CourseCapacity capacity = requestsHelper.GetCourseCapacity(capacityNode);
 
-            return capacity;
+                return capacity;
+            }
+            catch(Exception e)
+            {
+                logger.LogInformation($"An exception occured in GetCapacity request: {e.Message}");
+                throw;
+            }
         }
         public async Task<bool> CheckCourseExists(Course course)
         {

@@ -54,7 +54,7 @@ namespace course_sense_dotnet
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -63,10 +63,12 @@ namespace course_sense_dotnet
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "course_sense_dotnet v1"));
             }
 
-            app.UseDefaultFiles();
-            app.UseStaticFiles();
+            loggerFactory.AddFile(app.ApplicationServices.GetService<IConfiguration>()["Logging:FilePath"]);
 
             app.UseHttpsRedirection();
+
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
 
             app.UseRouting();
 

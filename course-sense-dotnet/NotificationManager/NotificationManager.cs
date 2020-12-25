@@ -31,6 +31,7 @@ namespace course_sense_dotnet.NotificationManager
             SynchronizedCollection<NotificationRequest> notificationRequests)
         {
             CourseCapacity capacity = await requests.GetCapacity(notificationRequest.RequestedCourse);
+            logger.LogInformation($"Capacity for {notificationRequest.RequestedCourse.Term}|{notificationRequest.RequestedCourse.Subject}|{notificationRequest.RequestedCourse.Code}|{notificationRequest.RequestedCourse.Section} is {capacity.CurrentCapacity}");
             if (capacity.CurrentCapacity > 0)
             {
                 //alert the user and remove from in-memory collection and db
