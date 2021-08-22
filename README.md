@@ -32,8 +32,6 @@
     Course Sense is a simple web application to allow UofG students easy access into the courses they need. Students input a full course they want access to into the course sense website, and will be alerted via SMS or email when a space opens up, allowing them to log on to the course registration site and get the spot.
     <br />
     <br />
-    <a href="https://github.com/jacobmichels/Course-Sense">View Demo</a>
-    ·
     <a href="https://github.com/jacobmichels/Course-Sense/issues">Report Bug</a>
     ·
     <a href="https://github.com/jacobmichels/Course-Sense/issues">Request Feature</a>
@@ -42,7 +40,7 @@
 
 
 <!-- ABOUT THE PROJECT -->
-## About The Project
+## Screenshot
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
@@ -81,6 +79,7 @@ Project Link: [https://github.com/jacobmichels/Course-Sense](https://github.com/
 [issues-shield]: https://img.shields.io/github/issues/jacobmichels/repo.svg?style=for-the-badge
 [issues-url]: https://github.com/jacobmichels/Course-Sense/issues
 [license-shield]: https://img.shields.io/github/license/jacobmichels/repo.svg?style=for-the-badge
-[license-url]: https://github.com/jacobmichels/Course-Sense/blob/master/LICENSE.txt
+[license-url]: https://github.com/jacobmichels/Course-Sense/blob/master/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/jacobmichels
+[product-screenshot]: images/course-sense-landing-page.png
