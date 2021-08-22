@@ -42,7 +42,7 @@
 <!-- ABOUT THE PROJECT -->
 ## Screenshot
 
-[![Product Name Screen Shot][product-screenshot]]
+![Product Name Screen Shot][product-screenshot]
 
 
 ### Built With
