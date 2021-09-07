@@ -32,6 +32,9 @@
     Course Sense is a simple web application to allow UofG students easy access into the courses they need. Students input a full course they want access to into the course sense website, and will be alerted via SMS or email when a space opens up, allowing them to log on to the course registration site and get the spot.
     <br />
     <br />
+    Due to recent updates to the University of Guelph's course selection process, Course Sense is currently down. A fix is coming soon!
+    <br />
+    <br />
     <a href="https://github.com/jacobmichels/Course-Sense/issues">Report Bug</a>
     ·
     <a href="https://github.com/jacobmichels/Course-Sense/issues">Request Feature</a>
