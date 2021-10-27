@@ -1,6 +1,6 @@
-﻿using course_sense_dotnet.DataAccessLayer;
+﻿using course_sense_dotnet.Models;
 using course_sense_dotnet.NotificationManager;
-using course_sense_dotnet.Utility;
+using course_sense_dotnet.Repository;
 using course_sense_dotnet.WebAdvisor;
 using LiteDB;
 using Microsoft.Extensions.Configuration;
@@ -23,14 +23,14 @@ namespace course_sense_dotnet
         private SynchronizedCollection<NotificationRequest> requestCollection;
         private readonly IList<Task> tasks;
         private readonly IHostApplicationLifetime applicationLifetime;
-        private readonly IDataAccess dataAccess;
+        private readonly IDBRepository dataAccess;
         public PollingLoop(ILogger<PollingLoop> logger,
             SynchronizedCollection<NotificationRequest> requestCollection,
             IList<Task> tasks,
             IServiceProvider serviceProvider,
             IHostApplicationLifetime applicationLifetime,
             IConfiguration configuration,
-            IDataAccess dataAccess)
+            IDBRepository dataAccess)
         {
             this.logger = logger;
             this.requestCollection = requestCollection;
@@ -76,7 +76,7 @@ namespace course_sense_dotnet
             int NumberOfRetrievedDocuments =0;
             try
             {
-                IEnumerable<NotificationRequest> dbcollection = dataAccess.GetCollectionFromDB();
+                IEnumerable<NotificationRequest> dbcollection = dataAccess.GetAllNotificationRequests();
                 NumberOfRetrievedDocuments = dbcollection.Count();
                 foreach(NotificationRequest request in dbcollection)
                 {

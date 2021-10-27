@@ -1,28 +1,28 @@
-﻿using course_sense_dotnet.Utility;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LiteDB;
 using Microsoft.Extensions.Configuration;
+using course_sense_dotnet.Models;
 
-namespace course_sense_dotnet.DataAccessLayer
+namespace course_sense_dotnet.Repository
 {
-    public class DataAccess : IDisposable, IDataAccess
+    public class DBRepository : IDisposable, IDBRepository
     {
         private readonly ILogger logger;
         private readonly IConfiguration configuration;
         private readonly LiteDatabase db;
         private bool disposedValue;
 
-        public DataAccess(ILogger<DataAccess> logger, IConfiguration configuration)
+        public DBRepository(ILogger<DBRepository> logger, IConfiguration configuration)
         {
             this.logger = logger;
             this.configuration = configuration;
             db = new LiteDatabase(configuration["LiteDB:ConnectionString"]);
         }
-        public bool InsertRequestIntoDB(NotificationRequest request)
+        public bool InsertRequest(NotificationRequest request)
         {
             try
             {
@@ -36,7 +36,7 @@ namespace course_sense_dotnet.DataAccessLayer
                 return false;
             }
         }
-        public bool RemoveRequestFromDB(NotificationRequest request)
+        public bool RemoveRequest(NotificationRequest request)
         {
             try
             {
@@ -49,7 +49,7 @@ namespace course_sense_dotnet.DataAccessLayer
                 return false;
             }
         }
-        public IEnumerable<NotificationRequest> GetCollectionFromDB()
+        public IEnumerable<NotificationRequest> GetAllNotificationRequests()
         {
             try
             {
@@ -58,7 +58,7 @@ namespace course_sense_dotnet.DataAccessLayer
             }
             catch (Exception e)
             {
-                logger.LogError("Could not read from LiteDB: "+e.Message);
+                logger.LogError("Could not read from LiteDB: " + e.Message);
                 return null;
             }
         }

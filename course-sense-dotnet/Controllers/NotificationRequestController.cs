@@ -1,6 +1,7 @@
-﻿using course_sense_dotnet.DataAccessLayer;
-using course_sense_dotnet.Models.WebAdvisor;
-using course_sense_dotnet.Utility;
+﻿using course_sense_dotnet.Models;
+using course_sense_dotnet.Repository;
+using course_sense_dotnet.Validators;
+using course_sense_dotnet.WebAdvisor.RequestManager;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -17,15 +18,15 @@ namespace course_sense_dotnet.Controllers
     public class NotificationRequestController : ControllerBase
     {
         private readonly ILogger logger;
-        private readonly IRequests requests;
-        private readonly IContactValidation contactValidation;
+        private readonly IRequestManager requests;
+        private readonly IContactValidator contactValidation;
         private readonly SynchronizedCollection<NotificationRequest> notificationRequests;
-        private readonly IDataAccess dataAccess;
+        private readonly IDBRepository dataAccess;
         public NotificationRequestController(ILogger<NotificationRequestController> logger,
-            IRequests requests,
+            IRequestManager requests,
             SynchronizedCollection<NotificationRequest> notificationRequests,
-            IContactValidation contactValidation,
-            IDataAccess dataAccess)
+            IContactValidator contactValidation,
+            IDBRepository dataAccess)
         {
             this.logger = logger;
             this.requests = requests;
@@ -53,7 +54,7 @@ namespace course_sense_dotnet.Controllers
                 logger.LogError($"Error in {nameof(NotificationRequestController)}: {e.Message} | Status 500 returned");
                 return StatusCode(500,"Error during validation");
             }
-            if (!dataAccess.InsertRequestIntoDB(requestData))
+            if (!dataAccess.InsertRequest(requestData))
             {
                 logger.LogError($"Error in {nameof(NotificationRequestController)} DB Insert failed, Status 500 returned");
                 return StatusCode(500,"Failed DB insert");

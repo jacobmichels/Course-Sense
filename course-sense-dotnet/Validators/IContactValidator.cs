@@ -1,6 +1,6 @@
-﻿namespace course_sense_dotnet.Utility
+﻿namespace course_sense_dotnet.Validators
 {
-    public interface IContactValidation
+    public interface IContactValidator
     {
         bool ValidateContactInfo(string phone, string email);
         bool ValidateEmail(string email);

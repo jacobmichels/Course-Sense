@@ -1,15 +1,15 @@
-﻿using course_sense_dotnet.AlertSystem;
+﻿using course_sense_dotnet.AlertManager.SMSClient;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Text.RegularExpressions;
 
-namespace course_sense_dotnet.Utility
+namespace course_sense_dotnet.Validators
 {
-    public class ContactValidation : IContactValidation
+    public class ContactValidator : IContactValidator
     {
         private readonly ILogger logger;
-        private readonly ITwilioClientWrapper twilioClient;
-        public ContactValidation(ILogger<ContactValidation> logger, ITwilioClientWrapper twilioClient)
+        private readonly ISMSClient twilioClient;
+        public ContactValidator(ILogger<ContactValidator> logger, ISMSClient twilioClient)
         {
             this.logger = logger;
             this.twilioClient = twilioClient;
@@ -17,7 +17,7 @@ namespace course_sense_dotnet.Utility
         }
         public bool ValidateContactInfo(string phone, string email)
         {
-            if(string.IsNullOrEmpty(phone) && string.IsNullOrEmpty(email))
+            if (string.IsNullOrEmpty(phone) && string.IsNullOrEmpty(email))
             {
                 return false;
             }

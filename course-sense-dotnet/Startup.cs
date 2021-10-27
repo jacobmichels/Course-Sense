@@ -1,22 +1,21 @@
-using course_sense_dotnet.AlertSystem;
-using course_sense_dotnet.DataAccessLayer;
-using course_sense_dotnet.Models.WebAdvisor;
+using course_sense_dotnet.AlertManager;
+using course_sense_dotnet.AlertManager.EmailClient;
+using course_sense_dotnet.AlertManager.SMSClient;
+using course_sense_dotnet.Models;
 using course_sense_dotnet.NotificationManager;
-using course_sense_dotnet.Utility;
+using course_sense_dotnet.Repository;
+using course_sense_dotnet.Validators;
+using course_sense_dotnet.WebAdvisor.RequestHelper;
+using course_sense_dotnet.WebAdvisor.RequestManager;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Twilio;
 
 namespace course_sense_dotnet
 {
@@ -32,13 +31,13 @@ namespace course_sense_dotnet
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IDataAccess, DataAccess>();
+            services.AddSingleton<IDBRepository, DBRepository>();
             services.AddTransient<IEmailClient, EmailClient>();
-            services.AddTransient<IAlertContact, AlertContact>();
-            services.AddTransient<ITwilioClientWrapper, TwilioClientWrapper>();
-            services.AddTransient<IContactValidation, ContactValidation>();
+            services.AddTransient<IAlertManager, AlertManager.AlertManager>();
+            services.AddTransient<ISMSClient, ISMSClient>();
+            services.AddTransient<IContactValidator, ContactValidator>();
             services.AddTransient<IRequestsHelper, RequestsHelper>();
-            services.AddTransient<IRequests, Requests>();
+            services.AddTransient<IRequestManager, RequestManager>();
             services.AddTransient<INotificationManager, NotificationManager.NotificationManager>();
             services.AddSingleton<SynchronizedCollection<NotificationRequest>>();
             services.AddTransient<IList<Task>, List<Task>>();

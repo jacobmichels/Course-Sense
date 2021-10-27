@@ -1,4 +1,4 @@
-﻿using course_sense_dotnet.Utility;
+﻿using course_sense_dotnet.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace course_sense_dotnet.Models.WebAdvisor
+namespace course_sense_dotnet.WebAdvisor.RequestManager
 {
-    public interface IRequests
+    public interface IRequestManager
     {
         Task<bool> CheckCourseExists(CourseInfo course);
         Task<CourseCapacity> GetCapacity(CourseInfo course);

@@ -1,5 +1,6 @@
 ﻿using course_sense_dotnet.Models;
-using course_sense_dotnet.Models.WebAdvisor;
+using course_sense_dotnet.WebAdvisor.RequestHelper;
+using course_sense_dotnet.WebAdvisor.RequestManager;
 using course_sense_dotnet_tests.TestData;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
@@ -15,12 +16,12 @@ namespace course_sense_dotnet_tests
 {
     public class RequestsIntegrationTest
     {
-        private Requests requests;
+        private RequestManager requests;
         private RequestsHelper requestsHelper;
         public RequestsIntegrationTest()
         {
             requestsHelper = new RequestsHelper(new Mock<ILogger<RequestsHelper>>().Object);
-            requests = new Requests(new Mock<ILogger<Requests>>().Object,requestsHelper);
+            requests = new RequestManager(new Mock<ILogger<RequestManager>>().Object,requestsHelper);
         }
 
         [Theory]

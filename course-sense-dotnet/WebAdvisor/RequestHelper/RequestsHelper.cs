@@ -9,7 +9,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-namespace course_sense_dotnet.Models.WebAdvisor
+namespace course_sense_dotnet.WebAdvisor.RequestHelper
 {
     public class RequestsHelper : IRequestsHelper
     {

@@ -1,20 +1,21 @@
-﻿using course_sense_dotnet.DataAccessLayer;
-using course_sense_dotnet.Utility;
+﻿using course_sense_dotnet.AlertManager.EmailClient;
+using course_sense_dotnet.AlertManager.SMSClient;
+using course_sense_dotnet.Models;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace course_sense_dotnet.AlertSystem
+namespace course_sense_dotnet.AlertManager
 {
-    public class AlertContact : IAlertContact
+    public class AlertManager : IAlertManager
     {
         private readonly ILogger logger;
-        private readonly ITwilioClientWrapper twilioClientWrapper;
+        private readonly ISMSClient twilioClientWrapper;
         private readonly IEmailClient emailClient;
-        public AlertContact(ILogger<AlertContact> logger,
-            ITwilioClientWrapper twilioClientWrapper,
+        public AlertManager(ILogger<AlertManager> logger,
+            ISMSClient twilioClientWrapper,
             IEmailClient emailClient)
         {
             this.logger = logger;

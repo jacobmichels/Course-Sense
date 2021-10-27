@@ -2,7 +2,7 @@
 using HtmlAgilityPack;
 using System.Net.Http;
 
-namespace course_sense_dotnet.Models.WebAdvisor
+namespace course_sense_dotnet.WebAdvisor.RequestHelper
 {
     public interface IRequestsHelper
     {

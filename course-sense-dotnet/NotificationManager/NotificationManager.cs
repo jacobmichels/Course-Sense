@@ -1,8 +1,7 @@
-﻿using course_sense_dotnet.AlertSystem;
-using course_sense_dotnet.DataAccessLayer;
+﻿using course_sense_dotnet.AlertManager;
 using course_sense_dotnet.Models;
-using course_sense_dotnet.Models.WebAdvisor;
-using course_sense_dotnet.Utility;
+using course_sense_dotnet.Repository;
+using course_sense_dotnet.WebAdvisor.RequestManager;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -14,13 +13,13 @@ namespace course_sense_dotnet.NotificationManager
     public class NotificationManager : INotificationManager
     {
         private readonly ILogger logger;
-        private readonly IRequests requests;
-        private readonly IAlertContact alertContact;
-        private readonly IDataAccess dataAccess;
+        private readonly IRequestManager requests;
+        private readonly IAlertManager alertContact;
+        private readonly IDBRepository dataAccess;
         public NotificationManager(ILogger<NotificationManager> logger,
-            IRequests requests,
-            IAlertContact alertContact,
-            IDataAccess dataAccess)
+            IRequestManager requests,
+            IAlertManager alertContact,
+            IDBRepository dataAccess)
         {
             this.logger = logger;
             this.requests = requests;
@@ -44,7 +43,7 @@ namespace course_sense_dotnet.NotificationManager
                     logger.LogInformation($"Space found in course {notificationRequest.RequestedCourse.ToString()}"
                     + $" for user: {notificationRequest.Email} | {notificationRequest.Phone}");
                     notificationRequests.Remove(notificationRequest);
-                    if (!dataAccess.RemoveRequestFromDB(notificationRequest))
+                    if (!dataAccess.RemoveRequest(notificationRequest))
                     {
                         logger.LogError($"Did not remove request from db: {notificationRequest.Email}|{notificationRequest.Phone}|{notificationRequest.RequestedCourse.Term}|{notificationRequest.RequestedCourse.Subject}|{notificationRequest.RequestedCourse.Code}|{notificationRequest.RequestedCourse.Section}");
                     }

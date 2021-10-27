@@ -1,5 +1,6 @@
 ﻿using course_sense_dotnet.Models;
 using course_sense_dotnet.Utility;
+using course_sense_dotnet.WebAdvisor.RequestHelper;
 using HtmlAgilityPack;
 using Microsoft.Extensions.Logging;
 using System;
@@ -8,14 +9,14 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace course_sense_dotnet.Models.WebAdvisor
+namespace course_sense_dotnet.WebAdvisor.RequestManager
 {
-    public class Requests : IRequests
+    public class RequestManager : IRequestManager
     {
         private ILogger logger;
         private HttpClient httpClient;
         private IRequestsHelper requestsHelper;
-        public Requests(ILogger<Requests> logger, IRequestsHelper requestsHelper)
+        public RequestManager(ILogger<RequestManager> logger, IRequestsHelper requestsHelper)
         {
             this.logger = logger;
             this.requestsHelper = requestsHelper;

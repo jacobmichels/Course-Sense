@@ -1,4 +1,4 @@
-﻿using course_sense_dotnet.Models.WebAdvisor;
+﻿using course_sense_dotnet.WebAdvisor.RequestManager;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -14,8 +14,8 @@ namespace course_sense_dotnet.Controllers
     public class SubjectsController : ControllerBase
     {
         private readonly ILogger logger;
-        private readonly IRequests requests;
-        public SubjectsController(ILogger<SubjectsController> logger, IRequests requests)
+        private readonly IRequestManager requests;
+        public SubjectsController(ILogger<SubjectsController> logger, IRequestManager requests)
         {
             this.logger = logger;
             this.requests = requests;

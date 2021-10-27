@@ -8,15 +8,15 @@ using Twilio;
 using Twilio.Rest.Lookups.V1;
 using Twilio.Rest.Api.V2010.Account;
 using Twilio.Exceptions;
-using course_sense_dotnet.Models.WebAdvisor;
+using course_sense_dotnet.Models;
 
-namespace course_sense_dotnet.AlertSystem
+namespace course_sense_dotnet.AlertManager.SMSClient
 {
-    public class TwilioClientWrapper : ITwilioClientWrapper
+    public class TwilioSMSClient : ISMSClient
     {
-        private readonly ILogger<TwilioClientWrapper> logger;
+        private readonly ILogger<ISMSClient> logger;
         private readonly IConfiguration configuration;
-        public TwilioClientWrapper(ILogger<TwilioClientWrapper> logger,
+        public TwilioSMSClient(ILogger<ISMSClient> logger,
             IConfiguration configuration)
         {
             this.logger = logger;

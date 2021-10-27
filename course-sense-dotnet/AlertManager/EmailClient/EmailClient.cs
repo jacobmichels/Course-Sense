@@ -1,4 +1,4 @@
-﻿using course_sense_dotnet.Utility;
+﻿using course_sense_dotnet.Models;
 using MailKit.Net.Smtp;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace course_sense_dotnet.AlertSystem
+namespace course_sense_dotnet.AlertManager.EmailClient
 {
     public class EmailClient : IEmailClient
     {

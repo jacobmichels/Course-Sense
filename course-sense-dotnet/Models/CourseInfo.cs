@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace course_sense_dotnet.Models.WebAdvisor
+namespace course_sense_dotnet.Models
 {
     public class CourseInfo
     {

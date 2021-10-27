@@ -1,5 +1,5 @@
-﻿using course_sense_dotnet.AlertSystem;
-using course_sense_dotnet.Utility;
+﻿using course_sense_dotnet.AlertManager.SMSClient;
+using course_sense_dotnet.Validators;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -14,12 +14,12 @@ namespace course_sense_dotnet_tests
 {
     public class ContactValidationTests
     {
-        private readonly IContactValidation contactValidation;
-        private readonly Mock<ITwilioClientWrapper> twilioClientMock;
+        private readonly IContactValidator contactValidation;
+        private readonly Mock<ISMSClient> twilioClientMock;
         public ContactValidationTests()
         {
-            twilioClientMock = new Mock<ITwilioClientWrapper>();
-            contactValidation = new ContactValidation(new Mock<ILogger<ContactValidation>>().Object, twilioClientMock.Object);
+            twilioClientMock = new Mock<ISMSClient>();
+            contactValidation = new ContactValidator(new Mock<ILogger<ContactValidator>>().Object, twilioClientMock.Object);
         }
     }
 }
