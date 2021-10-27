@@ -20,7 +20,7 @@ namespace course_sense_dotnet
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseShutdownTimeout(TimeSpan.FromSeconds(10));
+                    webBuilder.UseShutdownTimeout(TimeSpan.FromSeconds(3));
                     webBuilder.UseStartup<Startup>();
                 });
     }
