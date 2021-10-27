@@ -1,5 +1,4 @@
-﻿using course_sense_dotnet.WebAdvisor;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +8,7 @@ using Twilio;
 using Twilio.Rest.Lookups.V1;
 using Twilio.Rest.Api.V2010.Account;
 using Twilio.Exceptions;
+using course_sense_dotnet.Models.WebAdvisor;
 
 namespace course_sense_dotnet.AlertSystem
 {
@@ -23,7 +23,7 @@ namespace course_sense_dotnet.AlertSystem
             this.configuration = configuration;
             TwilioClient.Init(configuration["Twilio:AccountSID"], configuration["Twilio:AuthToken"]);
         }
-        public void SendSMS(string phone, Course course)
+        public void SendSMS(string phone, CourseInfo course)
         {
             MessageResource message = MessageResource.Create(
                 body: $"This is course-sense.ca. {course.Subject} {course.Code} ({course.Section}) just had a space open up!",

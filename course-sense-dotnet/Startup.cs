@@ -1,8 +1,8 @@
 using course_sense_dotnet.AlertSystem;
 using course_sense_dotnet.DataAccessLayer;
+using course_sense_dotnet.Models.WebAdvisor;
 using course_sense_dotnet.NotificationManager;
 using course_sense_dotnet.Utility;
-using course_sense_dotnet.WebAdvisor;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;

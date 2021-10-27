@@ -8,20 +8,20 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace course_sense_dotnet.WebAdvisor
+namespace course_sense_dotnet.Models.WebAdvisor
 {
     public class Requests : IRequests
     {
         private ILogger logger;
         private HttpClient httpClient;
         private IRequestsHelper requestsHelper;
-        public Requests(ILogger<Requests> logger,IRequestsHelper requestsHelper)
+        public Requests(ILogger<Requests> logger, IRequestsHelper requestsHelper)
         {
             this.logger = logger;
             this.requestsHelper = requestsHelper;
             httpClient = requestsHelper.CreateHttpClient();
         }
-        public async Task<CourseCapacity> GetCapacity(Course course)
+        public async Task<CourseCapacity> GetCapacity(CourseInfo course)
         {
             try
             {
@@ -47,13 +47,13 @@ namespace course_sense_dotnet.WebAdvisor
 
                 return capacity;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 logger.LogInformation($"An exception occured in GetCapacity request: {e.Message}");
                 throw;
             }
         }
-        public async Task<bool> CheckCourseExists(Course course)
+        public async Task<bool> CheckCourseExists(CourseInfo course)
         {
             HttpRequestMessage request = requestsHelper.CreateHttpRequestMessage(HttpMethod.Get, Constants.WebAdvisorInitialConnectionUrl);
             HttpResponseMessage response = await httpClient.SendAsync(request);
@@ -74,7 +74,7 @@ namespace course_sense_dotnet.WebAdvisor
 
             HtmlNode mainContentNode = htmlDoc.GetElementbyId("main");
             HtmlNodeCollection errorNodes = mainContentNode.SelectNodes("//div[contains(@class, 'errorText')]");
-            if (errorNodes!=null && errorNodes.Any())
+            if (errorNodes != null && errorNodes.Any())
             {
                 return false;
             }

@@ -1,5 +1,5 @@
 ﻿using course_sense_dotnet.Models;
-using course_sense_dotnet.WebAdvisor;
+using course_sense_dotnet.Models.WebAdvisor;
 using course_sense_dotnet_tests.TestData;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
@@ -25,14 +25,14 @@ namespace course_sense_dotnet_tests
 
         [Theory]
         [ClassData(typeof(CourseClassData))]
-        public async Task CheckCourseExists_Should_ReturnTrue(Course course)
+        public async Task CheckCourseExists_Should_ReturnTrue(CourseInfo course)
         {
             bool result = await requests.CheckCourseExists(course);
             result.Should().BeTrue();
         }
         [Theory]
         [ClassData(typeof(BadCourseClassData))]
-        public async Task CheckCourseExists_Should_ReturnFalse(Course course)
+        public async Task CheckCourseExists_Should_ReturnFalse(CourseInfo course)
         {
             bool result = await requests.CheckCourseExists(course);
             result.Should().BeFalse();
@@ -46,7 +46,7 @@ namespace course_sense_dotnet_tests
         }
         [Theory]
         [ClassData(typeof(CourseClassData))]
-        public async Task GetCapacity_Should_ReturnValidCapacity(Course course)
+        public async Task GetCapacity_Should_ReturnValidCapacity(CourseInfo course)
         {
             CourseCapacity capacity = await requests.GetCapacity(course);
             capacity.CurrentCapacity.Should().BeGreaterOrEqualTo(0);

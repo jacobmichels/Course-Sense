@@ -9,7 +9,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-namespace course_sense_dotnet.WebAdvisor
+namespace course_sense_dotnet.Models.WebAdvisor
 {
     public class RequestsHelper : IRequestsHelper
     {
@@ -51,7 +51,7 @@ namespace course_sense_dotnet.WebAdvisor
             }
             return "https://webadvisor.uoguelph.ca/WebAdvisor/WebAdvisor?TOKENIDX=" + token + "&SS=1&APP=ST&CONSTITUENCY=WBST";
         }
-        public HttpContent CreateFormData(Course course)
+        public HttpContent CreateFormData(CourseInfo course)
         {
             if (course == null)
             {
@@ -110,7 +110,7 @@ namespace course_sense_dotnet.WebAdvisor
                 throw new ArgumentNullException($"{nameof(capacityNode)} is null.");
             }
             string[] capacities = capacityNode.InnerText.Split(" / ");
-            return new CourseCapacity(int.Parse(capacities[0]),int.Parse(capacities[1]));
+            return new CourseCapacity(int.Parse(capacities[0]), int.Parse(capacities[1]));
         }
 
     }

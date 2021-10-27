@@ -1,8 +1,8 @@
 ﻿using course_sense_dotnet.AlertSystem;
 using course_sense_dotnet.DataAccessLayer;
 using course_sense_dotnet.Models;
+using course_sense_dotnet.Models.WebAdvisor;
 using course_sense_dotnet.Utility;
-using course_sense_dotnet.WebAdvisor;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;

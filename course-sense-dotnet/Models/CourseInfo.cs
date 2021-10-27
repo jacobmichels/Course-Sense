@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace course_sense_dotnet.WebAdvisor
+namespace course_sense_dotnet.Models.WebAdvisor
 {
-    public class Course
+    public class CourseInfo
     {
         public string Term { get; set; }
         public string Subject { get; set; }

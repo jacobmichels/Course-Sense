@@ -1,4 +1,4 @@
-﻿using course_sense_dotnet.WebAdvisor;
+﻿using course_sense_dotnet.Models.WebAdvisor;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

@@ -1,6 +1,6 @@
 ﻿using course_sense_dotnet.DataAccessLayer;
+using course_sense_dotnet.Models.WebAdvisor;
 using course_sense_dotnet.Utility;
-using course_sense_dotnet.WebAdvisor;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

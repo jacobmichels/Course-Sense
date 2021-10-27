@@ -1,4 +1,4 @@
-﻿using course_sense_dotnet.WebAdvisor;
+﻿using course_sense_dotnet.Models.WebAdvisor;
 using LiteDB;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ namespace course_sense_dotnet.Utility
 {
     public class NotificationRequest
     {
-        public Course RequestedCourse { get; set; }
+        public CourseInfo RequestedCourse { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
         [System.Text.Json.Serialization.JsonIgnore]

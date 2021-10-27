@@ -2,7 +2,7 @@
 using HtmlAgilityPack;
 using System.Net.Http;
 
-namespace course_sense_dotnet.WebAdvisor
+namespace course_sense_dotnet.Models.WebAdvisor
 {
     public interface IRequestsHelper
     {
@@ -10,7 +10,7 @@ namespace course_sense_dotnet.WebAdvisor
         HttpRequestMessage CreateHttpRequestMessage(HttpMethod method, string url);
         string GetTokenFromResponse(HttpResponseMessage response);
         string CreatePostUrl(string token);
-        HttpContent CreateFormData(Course course);
+        HttpContent CreateFormData(CourseInfo course);
         CourseCapacity GetCourseCapacity(HtmlNode capacityNode);
     }
 }
