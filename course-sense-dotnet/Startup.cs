@@ -34,7 +34,7 @@ namespace course_sense_dotnet
             services.AddSingleton<IDBRepository, DBRepository>();
             services.AddTransient<IEmailClient, EmailClient>();
             services.AddTransient<IAlertManager, AlertManager.AlertManager>();
-            services.AddTransient<ISMSClient, ISMSClient>();
+            services.AddTransient<ISMSClient, TwilioSMSClient>();
             services.AddTransient<IContactValidator, ContactValidator>();
             services.AddTransient<IRequestsHelper, RequestsHelper>();
             services.AddTransient<IRequestManager, RequestManager>();
