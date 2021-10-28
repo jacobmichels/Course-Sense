@@ -18,26 +18,21 @@ namespace course_sense_dotnet
     public class PollingLoop : BackgroundService
     {
         private readonly ILogger logger;
-        private readonly IConfiguration configuration;
         private readonly IServiceProvider serviceProvider;
         private SynchronizedCollection<NotificationRequest> requestCollection;
         private readonly IList<Task> tasks;
-        private readonly IHostApplicationLifetime applicationLifetime;
         private readonly IDBRepository dataAccess;
         public PollingLoop(ILogger<PollingLoop> logger,
             SynchronizedCollection<NotificationRequest> requestCollection,
             IList<Task> tasks,
             IServiceProvider serviceProvider,
             IHostApplicationLifetime applicationLifetime,
-            IConfiguration configuration,
             IDBRepository dataAccess)
         {
             this.logger = logger;
             this.requestCollection = requestCollection;
             this.tasks = tasks;
             this.serviceProvider = serviceProvider;
-            this.applicationLifetime = applicationLifetime;
-            this.configuration = configuration;
             this.dataAccess = dataAccess;
             applicationLifetime.ApplicationStarted.Register(LoadNotificationRequests);
         }
