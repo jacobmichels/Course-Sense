@@ -1,9 +1,6 @@
-﻿using course_sense_dotnet.CapacityManager;
+﻿using course_sense_dotnet.Application.CapacityManager;
 using course_sense_dotnet.Models;
 using course_sense_dotnet.Repository;
-using course_sense_dotnet.WebAdvisor;
-using LiteDB;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -20,33 +17,48 @@ namespace course_sense_dotnet
         private readonly ILogger logger;
         private readonly IServiceProvider serviceProvider;
         private SynchronizedCollection<NotificationRequest> requestCollection;
-        private readonly IList<Task> tasks;
-        private readonly IDBRepository dataAccess;
+        private readonly IDBRepository repository;
+
         public PollingLoop(ILogger<PollingLoop> logger,
             SynchronizedCollection<NotificationRequest> requestCollection,
-            IList<Task> tasks,
             IServiceProvider serviceProvider,
-            IHostApplicationLifetime applicationLifetime,
-            IDBRepository dataAccess)
+            IDBRepository repository)
         {
+            // Get dependencies from dependency injection.
             this.logger = logger;
             this.requestCollection = requestCollection;
-            this.tasks = tasks;
+            this.repository = repository;
             this.serviceProvider = serviceProvider;
-            this.dataAccess = dataAccess;
-            applicationLifetime.ApplicationStarted.Register(LoadNotificationRequests);
+
+            // Load notification requests before main polling loop starts.
+            LoadNotificationRequests();
         }
+
+        // This is the background task that is started upon application start.
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             logger.LogInformation("Main loop background service starting.");
+
+            var tasks = new List<Task>();
+
+            // Stop if Cancellation is requested via the token. Ex. application shutdown
             while (!stoppingToken.IsCancellationRequested)
             {
-                if (requestCollection.Count>0)
+                // Only continue if there are requests in the collection to process.
+                if (requestCollection.Count > 0)
                 {
+                    // Loop through all requests, and spawn a task to check the course's capacity and alert the user if open space is found.
                     foreach (NotificationRequest request in requestCollection)
                     {
-                        tasks.Add(Task.Run(() => serviceProvider.GetRequiredService<ICapacityManager>().CheckCapacityAndAlert(request, requestCollection)));
+                        tasks.Add(Task.Run(() => {
+                            using (var scope = serviceProvider.CreateScope())
+                            {
+                                scope.ServiceProvider.GetRequiredService<ICapacityManager>().NotifyIfSpaceFound(request, requestCollection);
+                            }
+                        }));
                     }
+
+                    // Wait for all the tasks to complete, log any errors.
                     Task requestTasks = Task.WhenAll(tasks);
                     try
                     {
@@ -58,31 +70,39 @@ namespace course_sense_dotnet
                     }
                     if (requestTasks.Status == TaskStatus.Faulted)
                     {
-                        logger.LogError($"{nameof(requestTasks)} has completed due to an unhandled exception.");
+                        logger.LogError($"{nameof(requestTasks)} has faulted.");
+                        
                     }
+
+                    // Clear the task list in preparation for next iteration.
                     tasks.Clear();
                 }
+
+                // A primitive rate-limit to avoid spamming the WebAdvisor servers.
                 await Task.Delay(10000);
             }
         }
+
+        //This method loads saved NotificationRequests from the repository.
         private void LoadNotificationRequests()
         {
-            logger.LogInformation("Loading NotificationRequestCollection from db.");
-            int NumberOfRetrievedDocuments =0;
+            logger.LogInformation("Loading existing NotificationRequests from repository, if any.");
+            int requestCount = 0;
             try
             {
-                IEnumerable<NotificationRequest> dbcollection = dataAccess.GetAllNotificationRequests();
-                NumberOfRetrievedDocuments = dbcollection.Count();
-                foreach(NotificationRequest request in dbcollection)
+                // Get requests from the repository, then add each to the service's request collection.
+                IEnumerable<NotificationRequest> requests = repository.GetAllNotificationRequests();
+                requestCount = requests.Count();
+                foreach(NotificationRequest request in requests)
                 {
                     requestCollection.Add(request);
                 }
             }
             catch(Exception e)
             {
-                logger.LogError("Possible failure to load requests from database: " + e.Message);
+                logger.LogError("Failed to load requests from database: " + e.Message);
             }
-            logger.LogInformation($"Loaded {NumberOfRetrievedDocuments} document(s) from db.");
+            logger.LogInformation($"Loaded {requestCount} NotificationRequest(s) from repository.");
         }
     }
 }
