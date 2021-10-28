@@ -11,6 +11,7 @@ namespace course_sense_dotnet
 {
     public class Program
     {
+        // Default template code to start the ASP.NET Core server.
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();

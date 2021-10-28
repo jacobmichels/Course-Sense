@@ -1,4 +1,4 @@
-﻿using course_sense_dotnet.WebAdvisor.RequestManager;
+﻿using course_sense_dotnet.Application.WebAdvisor.RequestManager;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace course_sense_dotnet.Controllers
 {
+    // This class is a Controller for the route /Subjects
     [Route("[controller]")]
     [ApiController]
     public class SubjectsController : ControllerBase
@@ -20,6 +21,8 @@ namespace course_sense_dotnet.Controllers
             this.logger = logger;
             this.requests = requests;
         }
+        
+        // This method corresponds to the route GET /Subjects and returns a list of subjects offered on WebAdvisor.
         [HttpGet]
         public async Task<IActionResult> GetSubjectsList()
         {

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace course_sense_dotnet.Models
 {
+    // This class is a model for the capacity of a course.
     public class CourseCapacity
     {
         public CourseCapacity(int currentCapacity, int totalCapacity)

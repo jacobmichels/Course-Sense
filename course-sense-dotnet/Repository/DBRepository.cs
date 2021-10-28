@@ -9,20 +9,21 @@ using course_sense_dotnet.Models;
 
 namespace course_sense_dotnet.Repository
 {
+    // Repository for accessing LiteDB to persist NotificationRequests on disk.
     public class DBRepository : IDisposable, IDBRepository
     {
         private readonly ILogger logger;
-        private readonly IConfiguration configuration;
         private readonly LiteDatabase db;
         private bool disposedValue;
 
         public DBRepository(ILogger<DBRepository> logger, IConfiguration configuration)
         {
             this.logger = logger;
-            this.configuration = configuration;
             db = new LiteDatabase(configuration["LiteDB:ConnectionString"]);
         }
-        public bool InsertRequest(NotificationRequest request)
+
+        // This method will add the NotificationRequest to litedb, returning if the insert was successful and logging any errors.
+        public bool AddRequest(NotificationRequest request)
         {
             try
             {
@@ -36,6 +37,8 @@ namespace course_sense_dotnet.Repository
                 return false;
             }
         }
+
+        // This method will remove the NotificationRequest from litedb, returning if the deletion was successful and logging any errors.
         public bool RemoveRequest(NotificationRequest request)
         {
             try
@@ -49,6 +52,8 @@ namespace course_sense_dotnet.Repository
                 return false;
             }
         }
+
+        // This method will fetch all the NotificationRequests from litedb and return them, or null if none are found.
         public IEnumerable<NotificationRequest> GetAllNotificationRequests()
         {
             try
@@ -63,6 +68,7 @@ namespace course_sense_dotnet.Repository
             }
         }
 
+        //The LiteDatabase object needs to be disposed, this method and the DI container disposes of it properly.
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)
