@@ -1,12 +1,12 @@
-using course_sense_dotnet.CapacityManager;
+using course_sense_dotnet.Application.CapacityManager;
+using course_sense_dotnet.Application.NotificationManager;
+using course_sense_dotnet.Application.NotificationManager.EmailClient;
+using course_sense_dotnet.Application.NotificationManager.SMSClient;
+using course_sense_dotnet.Application.WebAdvisor.RequestHelper;
+using course_sense_dotnet.Application.WebAdvisor.RequestManager;
 using course_sense_dotnet.Models;
-using course_sense_dotnet.NotificationManager;
-using course_sense_dotnet.NotificationManager.EmailClient;
-using course_sense_dotnet.NotificationManager.SMSClient;
 using course_sense_dotnet.Repository;
 using course_sense_dotnet.Validators;
-using course_sense_dotnet.WebAdvisor.RequestHelper;
-using course_sense_dotnet.WebAdvisor.RequestManager;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -21,27 +21,35 @@ namespace course_sense_dotnet
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IDBRepository, DBRepository>();
-            services.AddTransient<IEmailClient, EmailClient>();
-            services.AddTransient<INotificationManager, NotificationManager.NotificationManager>();
-            services.AddTransient<ISMSClient, TwilioSMSClient>();
-            services.AddTransient<IContactValidator, ContactValidator>();
-            services.AddTransient<IRequestsHelper, RequestsHelper>();
-            services.AddTransient<IRequestManager, RequestManager>();
-            services.AddTransient<ICapacityManager, CapacityManager.CapacityManager>();
+            // Add the singleton services to the DI container.
+            // Add the thread-safe collection of NotificationRequests to DI as a singleton class.
             services.AddSingleton<SynchronizedCollection<NotificationRequest>>();
-            services.AddTransient<IList<Task>, List<Task>>();
+            // The DBRepository needs to be a singleton because there can only be one instance of the LiteDatabase class it uses interally at a time.
+            services.AddTransient<IDBRepository, DBRepository>();
 
+
+            // Add scoped services to the DI container. A new instance of these will be created for each scope.
+            // Example of a scope: a request
+            services.AddScoped<IEmailClient, EmailClient>();
+            services.AddScoped<INotificationManager, NotificationManager>();
+            services.AddScoped<ISMSClient, TwilioSMSClient>();
+            services.AddScoped<IContactValidator, ContactValidator>();
+            services.AddScoped<IRequestsHelper, RequestsHelper>();
+            services.AddScoped<IRequestManager, RequestManager>();
+            services.AddScoped<ICapacityManager, CapacityManager>();
+
+            // Add the PollingLoop class as a background service.
+            // The ExecuteAsync method of this class will be called to run in the background of the application.
             services.AddHostedService<PollingLoop>();
 
             services.AddLogging();
