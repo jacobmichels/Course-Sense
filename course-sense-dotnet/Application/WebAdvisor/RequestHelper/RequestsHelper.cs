@@ -9,15 +9,19 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-namespace course_sense_dotnet.WebAdvisor.RequestHelper
+namespace course_sense_dotnet.Application.WebAdvisor.RequestHelper
 {
+    // This class contains helper functions for sending requests to WebAdvisor
     public class RequestsHelper : IRequestsHelper
     {
         private readonly ILogger logger;
+
         public RequestsHelper(ILogger<RequestsHelper> logger)
         {
             this.logger = logger;
         }
+
+        // Helper method to create a new HTTP client configured for interacting with WebAdvisor.
         public HttpClient CreateHttpClient()
         {
             HttpClientHandler handler = new HttpClientHandler()
@@ -28,10 +32,14 @@ namespace course_sense_dotnet.WebAdvisor.RequestHelper
             };
             return new HttpClient(handler);
         }
+
+        // Helper method to return a new HttpRequestMessage given the method and url.
         public HttpRequestMessage CreateHttpRequestMessage(HttpMethod httpMethod, string url)
         {
             return new HttpRequestMessage(httpMethod, url);
         }
+
+        // This method parses an access token from an HTTP response and returns it.
         public string GetTokenFromResponse(HttpResponseMessage response)
         {
             if (response == null)
@@ -42,6 +50,8 @@ namespace course_sense_dotnet.WebAdvisor.RequestHelper
             List<string> cookies = response.Headers.GetValues("Set-Cookie").ToList();
             return cookies[1].Split("=")[1];
         }
+
+        // This method creates a URL with the given token.
         public string CreatePostUrl(string token)
         {
             if (token == null)
@@ -51,6 +61,8 @@ namespace course_sense_dotnet.WebAdvisor.RequestHelper
             }
             return "https://webadvisor.uoguelph.ca/WebAdvisor/WebAdvisor?TOKENIDX=" + token + "&SS=1&APP=ST&CONSTITUENCY=WBST";
         }
+
+        // This method fills in required formdata with the given CourseInfo object.
         public HttpContent CreateFormData(CourseInfo course)
         {
             if (course == null)
@@ -102,6 +114,8 @@ namespace course_sense_dotnet.WebAdvisor.RequestHelper
 
             return content;
         }
+
+        // This method will extract the capacity from a course given an HTML node containing the capacity.
         public CourseCapacity GetCourseCapacity(HtmlNode capacityNode)
         {
             if (capacityNode == null)
@@ -112,6 +126,5 @@ namespace course_sense_dotnet.WebAdvisor.RequestHelper
             string[] capacities = capacityNode.InnerText.Split(" / ");
             return new CourseCapacity(int.Parse(capacities[0]), int.Parse(capacities[1]));
         }
-
     }
 }

@@ -1,6 +1,6 @@
-﻿using course_sense_dotnet.Models;
+﻿using course_sense_dotnet.Application.WebAdvisor.RequestHelper;
+using course_sense_dotnet.Models;
 using course_sense_dotnet.Utility;
-using course_sense_dotnet.WebAdvisor.RequestHelper;
 using HtmlAgilityPack;
 using Microsoft.Extensions.Logging;
 using System;
@@ -9,8 +9,9 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace course_sense_dotnet.WebAdvisor.RequestManager
+namespace course_sense_dotnet.Application.WebAdvisor.RequestManager
 {
+    // This class sends HTTP requests to WebAdvisor for the purpose of getting course and subject info.
     public class RequestManager : IRequestManager
     {
         private ILogger logger;
@@ -22,6 +23,9 @@ namespace course_sense_dotnet.WebAdvisor.RequestManager
             this.requestsHelper = requestsHelper;
             httpClient = requestsHelper.CreateHttpClient();
         }
+
+        // This method will get the capacity of the input course.
+        // This method makes a series of HTTP requests to gain authorization, then get the required course info. 
         public async Task<CourseCapacity> GetCapacity(CourseInfo course)
         {
             try
@@ -54,6 +58,9 @@ namespace course_sense_dotnet.WebAdvisor.RequestManager
                 throw;
             }
         }
+
+        // This method will check if a course exists, returning true if it does.
+        // This method makes a series of HTTP requests to gain authorization, then attempts to find the input course. 
         public async Task<bool> CheckCourseExists(CourseInfo course)
         {
             HttpRequestMessage request = requestsHelper.CreateHttpRequestMessage(HttpMethod.Get, Constants.WebAdvisorInitialConnectionUrl);
@@ -81,6 +88,8 @@ namespace course_sense_dotnet.WebAdvisor.RequestManager
             }
             return true;
         }
+
+        // This method returns a list of subjects offered on WebAdvisor.
         public async Task<List<string>> GetSubjects()
         {
             HttpRequestMessage request = requestsHelper.CreateHttpRequestMessage(HttpMethod.Get, Constants.WebAdvisorInitialConnectionUrl);

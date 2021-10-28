@@ -8,8 +8,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace course_sense_dotnet.NotificationManager.EmailClient
+namespace course_sense_dotnet.Application.NotificationManager.EmailClient
 {
+    // This class is responsible for sending an email notification to the user
     public class EmailClient : IEmailClient
     {
         private readonly ILogger logger;
@@ -19,8 +20,13 @@ namespace course_sense_dotnet.NotificationManager.EmailClient
             this.logger = logger;
             this.configuration = configuration;
         }
+
+        // This method will send an email to the user associated with this NotificationRequest
         public bool SendEmail(NotificationRequest requestData)
         {
+            logger.LogInformation($"Attempting to email user: {requestData.Email}");
+
+            // Construct the email
             MimeMessage message = new MimeMessage();
             message.From.Add(new MailboxAddress("Course sense", configuration["EmailConfig:NotificationSenderEmail"]));
             message.To.Add(MailboxAddress.Parse(requestData.Email));
@@ -38,6 +44,8 @@ namespace course_sense_dotnet.NotificationManager.EmailClient
                 $"Have a nice day,\n" +
                 $"course-sense.ca"
             };
+
+            // Send the email
             try
             {
                 using (SmtpClient smtpClient = new SmtpClient())
@@ -50,9 +58,10 @@ namespace course_sense_dotnet.NotificationManager.EmailClient
             }
             catch (Exception e)
             {
-                logger.LogError("Error in Smtp client: " + e.Message);
+                logger.LogError($"Error in Smtp client: {e.Message}. Email not sent to user.");
                 return false;
             }
+            logger.LogInformation($"Email sent to {requestData.Email}.");
             return true;
 
         }

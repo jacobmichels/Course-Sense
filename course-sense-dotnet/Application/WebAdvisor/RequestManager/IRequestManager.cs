@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace course_sense_dotnet.WebAdvisor.RequestManager
+namespace course_sense_dotnet.Application.WebAdvisor.RequestManager
 {
     public interface IRequestManager
     {
