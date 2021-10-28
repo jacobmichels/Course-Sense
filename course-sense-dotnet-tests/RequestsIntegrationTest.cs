@@ -1,6 +1,6 @@
-﻿using course_sense_dotnet.Models;
-using course_sense_dotnet.WebAdvisor.RequestHelper;
-using course_sense_dotnet.WebAdvisor.RequestManager;
+﻿using course_sense_dotnet.Application.WebAdvisor.RequestHelper;
+using course_sense_dotnet.Application.WebAdvisor.RequestManager;
+using course_sense_dotnet.Models;
 using course_sense_dotnet_tests.TestData;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
