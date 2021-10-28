@@ -1,4 +1,4 @@
-﻿using course_sense_dotnet.AlertManager.SMSClient;
+﻿using course_sense_dotnet.NotificationManager.SMSClient;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Text.RegularExpressions;

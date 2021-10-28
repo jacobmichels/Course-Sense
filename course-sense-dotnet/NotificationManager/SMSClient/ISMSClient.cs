@@ -1,6 +1,6 @@
 ﻿using course_sense_dotnet.Models;
 
-namespace course_sense_dotnet.AlertManager.SMSClient
+namespace course_sense_dotnet.NotificationManager.SMSClient
 {
     public interface ISMSClient
     {

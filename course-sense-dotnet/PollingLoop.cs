@@ -1,5 +1,5 @@
-﻿using course_sense_dotnet.Models;
-using course_sense_dotnet.NotificationManager;
+﻿using course_sense_dotnet.CapacityManager;
+using course_sense_dotnet.Models;
 using course_sense_dotnet.Repository;
 using course_sense_dotnet.WebAdvisor;
 using LiteDB;
@@ -50,7 +50,7 @@ namespace course_sense_dotnet
                 {
                     foreach (NotificationRequest request in requestCollection)
                     {
-                        tasks.Add(Task.Run(() => serviceProvider.GetRequiredService<INotificationManager>().CheckCapacityAndAlert(request, requestCollection)));
+                        tasks.Add(Task.Run(() => serviceProvider.GetRequiredService<ICapacityManager>().CheckCapacityAndAlert(request, requestCollection)));
                     }
                     Task requestTasks = Task.WhenAll(tasks);
                     try

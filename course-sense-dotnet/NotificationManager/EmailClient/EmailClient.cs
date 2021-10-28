@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace course_sense_dotnet.AlertManager.EmailClient
+namespace course_sense_dotnet.NotificationManager.EmailClient
 {
     public class EmailClient : IEmailClient
     {

@@ -1,4 +1,4 @@
-﻿using course_sense_dotnet.AlertManager.SMSClient;
+﻿using course_sense_dotnet.NotificationManager.SMSClient;
 using course_sense_dotnet.Validators;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;

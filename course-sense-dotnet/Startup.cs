@@ -1,8 +1,8 @@
-using course_sense_dotnet.AlertManager;
-using course_sense_dotnet.AlertManager.EmailClient;
-using course_sense_dotnet.AlertManager.SMSClient;
+using course_sense_dotnet.CapacityManager;
 using course_sense_dotnet.Models;
 using course_sense_dotnet.NotificationManager;
+using course_sense_dotnet.NotificationManager.EmailClient;
+using course_sense_dotnet.NotificationManager.SMSClient;
 using course_sense_dotnet.Repository;
 using course_sense_dotnet.Validators;
 using course_sense_dotnet.WebAdvisor.RequestHelper;
@@ -33,12 +33,12 @@ namespace course_sense_dotnet
         {
             services.AddSingleton<IDBRepository, DBRepository>();
             services.AddTransient<IEmailClient, EmailClient>();
-            services.AddTransient<IAlertManager, AlertManager.AlertManager>();
+            services.AddTransient<INotificationManager, NotificationManager.NotificationManager>();
             services.AddTransient<ISMSClient, TwilioSMSClient>();
             services.AddTransient<IContactValidator, ContactValidator>();
             services.AddTransient<IRequestsHelper, RequestsHelper>();
             services.AddTransient<IRequestManager, RequestManager>();
-            services.AddTransient<INotificationManager, NotificationManager.NotificationManager>();
+            services.AddTransient<ICapacityManager, CapacityManager.CapacityManager>();
             services.AddSingleton<SynchronizedCollection<NotificationRequest>>();
             services.AddTransient<IList<Task>, List<Task>>();
 

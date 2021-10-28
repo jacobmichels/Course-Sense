@@ -1,6 +1,6 @@
 ﻿using course_sense_dotnet.Models;
 
-namespace course_sense_dotnet.AlertManager.EmailClient
+namespace course_sense_dotnet.NotificationManager.EmailClient
 {
     public interface IEmailClient
     {

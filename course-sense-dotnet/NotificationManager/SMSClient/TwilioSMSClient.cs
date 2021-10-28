@@ -10,7 +10,7 @@ using Twilio.Rest.Api.V2010.Account;
 using Twilio.Exceptions;
 using course_sense_dotnet.Models;
 
-namespace course_sense_dotnet.AlertManager.SMSClient
+namespace course_sense_dotnet.NotificationManager.SMSClient
 {
     public class TwilioSMSClient : ISMSClient
     {
